@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMVY Dashboard</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #f0883e;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --cyan: #39d0c3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+  .header h1 { font-size: 1.6rem; letter-spacing: -0.5px; }
+  .header .meta { color: var(--muted); font-size: 0.85rem; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .stat-card .val { font-size: 2.4rem; font-weight: 700; color: var(--accent); line-height: 1; }
+  .stat-card .lbl { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 14px; color: var(--text); }
+  .card h2 .sub { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+
+  .stage-bar { display: flex; height: 32px; border-radius: 6px; overflow: hidden; gap: 2px; margin: 12px 0; }
+  .stage-seg { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; min-width: 28px; color: #000; }
+  .stage-seg.gray { background: var(--border); color: var(--muted); }
+  .stage-seg.blue { background: #388bfd; }
+  .stage-seg.cyan { background: var(--cyan); }
+  .stage-seg.orange { background: var(--orange); }
+  .stage-seg.yellow { background: var(--yellow); color: #000; }
+  .stage-seg.green { background: var(--green); }
+  .stage-seg.purple { background: var(--purple); }
+  .stage-seg.red { background: var(--red); }
+
+  .stage-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .stage-legend span { font-size: 0.75rem; color: var(--muted); }
+  .stage-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+  .stage-badge.hot { background: rgba(240,136,62,0.2); color: var(--orange); }
+  .stage-badge.qualified { background: rgba(57,208,195,0.2); color: var(--cyan); }
+  .stage-badge.sent { background: rgba(63,185,80,0.2); color: var(--green); }
+  .stage-badge.replied { background: rgba(188,140,255,0.2); color: var(--purple); }
+  .stage-badge.nurture { background: rgba(125,133,144,0.2); color: var(--muted); }
+  .stage-badge.warm { background: rgba(210,153,34,0.2); color: var(--yellow); }
+  .stage-badge.new { background: rgba(56,139,253,0.2); color: #388bfd; }
+  .stage-badge.unknown { background: rgba(125,133,144,0.2); color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); padding: 8px 6px; }
+  td { padding: 9px 6px; font-size: 0.88rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  .bold { font-weight: 600; }
+  .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; }
+  .small { font-size: 0.78rem; }
+  .muted { color: var(--muted); }
+  .right { text-align: right; }
+
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot.green { background: var(--green); }
+  .dot.gray { background: var(--border); }
+  .dot.red { background: var(--red); }
+
+  .research-items { display: flex; flex-direction: column; gap: 10px; }
+  .research-item { font-size: 0.88rem; padding: 10px 12px; background: var(--bg); border-radius: 6px; border-left: 3px solid var(--accent); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .footer { margin-top: 24px; text-align: center; color: var(--muted); font-size: 0.78rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>EMVY Dashboard</h1>
+  <div class="meta">Updated 29 Apr 2026 09:12 · <a href="https://github.com/duskmetamask-bit/mewy-vault">mewy-vault</a></div>
+</div>
+
+<!-- STATS ROW -->
+<div class="grid">
+  <div class="stat-card">
+    <div class="val">42</div>
+    <div class="lbl">Total Leads</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">2</div>
+    <div class="lbl">HOT Leads</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">38</div>
+    <div class="lbl">Enriched</div>
+  </div>
+  <div class="stat-card">
+    <div class="val">24</div>
+    <div class="lbl">With Email</div>
+  </div>
+</div>
+
+<!-- STAGE BREAKDOWN -->
+<div class="card">
+  <h2>Pipeline Stages</h2>
+  <div class="stage-bar"><div class="stage-seg green" style="width:28.6%" title="SENT: 12">12</div><div class="stage-seg gray" style="width:21.4%" title="SKIP: 9">9</div><div class="stage-seg gray" style="width:14.3%" title="DISCOVERED: 6">6</div><div class="stage-seg gray" style="width:11.9%" title="COLD: 5">5</div><div class="stage-seg yellow" style="width:9.5%" title="WARM: 4">4</div><div class="stage-seg gray" style="width:7.1%" title="UNKNOWN: 3">3</div><div class="stage-seg orange" style="width:4.8%" title="HOT: 2">2</div><div class="stage-seg gray" style="width:2.4%" title="RESEARCH: 1">1</div></div>
+  <div class="stage-legend">
+    <span>SENT: 12</span><span>SKIP: 9</span><span>DISCOVERED: 6</span><span>COLD: 5</span><span>WARM: 4</span><span>UNKNOWN: 3</span><span>HOT: 2</span><span>RESEARCH: 1</span>
+  </div>
+</div>
+
+<!-- CRON STATUS + HOT LEADS -->
+<div class="two-col">
+  <div class="card">
+    <h2>Cron Jobs</h2>
+    <table>
+      <tr><th>Job</th><th>Last Run</th><th>Status</th></tr>
+      <tr><td>AI Opportunities Research</td><td class='mono'>Never</td><td><span class="dot gray"></span></td></tr><tr><td>Lead Finder</td><td class='mono'>Never</td><td><span class="dot gray"></span></td></tr><tr><td>Content Pipeline</td><td class='mono'>Never</td><td><span class="dot gray"></span></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h2>HOT Leads</h2>
+    <table>
+      <tr><th>Business</th><th>Suburb</th><th>Email</th><th>Stage</th></tr>
+      <tr><td class='bold'>Dicandilo Thomson</td><td>Burswood, Perth, WA</td><td class='mono small'>office@dicandilothomson.com.au</td><td class='stage-badge hot'>HOT</td></tr><tr><td class='bold'>Edental Perth</td><td>Rivervale, Perth, WA</td><td class='mono small'>info@edentalperth.net.au</td><td class='stage-badge hot'>HOT</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- LATEST RESEARCH -->
+
+
+<!-- RECENT OUTREACH -->
+<div class="card">
+  <h2>Recent Outreach</h2>
+  <table>
+    <tr><th>Business</th><th>Sent At</th><th>Stage</th></tr>
+    <tr><td class='bold'>Air Conditioning Perth</td><td>24 Apr 08:06</td><td class='stage-badge sent'>SENT</td></tr><tr><td class='bold'>Professional Electricians Perth</td><td>24 Apr 08:06</td><td class='stage-badge sent'>SENT</td></tr><tr><td class='bold'>Ryan and Partners</td><td>24 Apr 08:06</td><td class='stage-badge sent'>SENT</td></tr><tr><td class='bold'>Ryan &amp; Partners</td><td>24 Apr 08:06</td><td class='stage-badge sent'>SENT</td></tr><tr><td class='bold'>Perth Central Dental Centre</td><td>24 Apr 08:06</td><td class='stage-badge sent'>SENT</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  EMVY · AI Audit Agency · Built on Hermes · <a href="https://github.com/duskmetamask-bit/mewy-vault">mewy-vault</a>
+</div>
+
+</body>
+</html>
