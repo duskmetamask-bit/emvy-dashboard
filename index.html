@@ -83,19 +83,25 @@
   @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 
   .footer { margin-top: 24px; text-align: center; color: var(--muted); font-size: 0.78rem; }
+
+  /* Tools catalog */
+  .tools-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 12px 0 16px; }
+  .tool-stat { background: var(--bg); border-radius: 6px; padding: 12px; text-align: center; }
+  .tool-stat-val { font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; }
+  .tool-stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>EMVY Dashboard</h1>
-  <div class="meta">Updated 30 Apr 2026 09:00 · <a href="https://github.com/duskmetamask-bit/mewy-vault">mewy-vault</a></div>
+  <div class="meta">Updated 30 Apr 2026 17:52 · <a href="https://github.com/duskmetamask-bit/mewy-vault">mewy-vault</a></div>
 </div>
 
 <!-- STATS ROW -->
 <div class="grid">
   <div class="stat-card">
-    <div class="val">47</div>
+    <div class="val">52</div>
     <div class="lbl">Total Leads</div>
   </div>
   <div class="stat-card">
@@ -103,11 +109,11 @@
     <div class="lbl">HOT Leads</div>
   </div>
   <div class="stat-card">
-    <div class="val">43</div>
+    <div class="val">48</div>
     <div class="lbl">Enriched</div>
   </div>
   <div class="stat-card">
-    <div class="val">28</div>
+    <div class="val">33</div>
     <div class="lbl">With Email</div>
   </div>
 </div>
@@ -115,9 +121,9 @@
 <!-- STAGE BREAKDOWN -->
 <div class="card">
   <h2>Pipeline Stages</h2>
-  <div class="stage-bar"><div class="stage-seg green" style="width:25.5%" title="SENT: 12">12</div><div class="stage-seg gray" style="width:23.4%" title="DISCOVERED: 11">11</div><div class="stage-seg gray" style="width:19.1%" title="SKIP: 9">9</div><div class="stage-seg gray" style="width:10.6%" title="COLD: 5">5</div><div class="stage-seg yellow" style="width:8.5%" title="WARM: 4">4</div><div class="stage-seg gray" style="width:6.4%" title="UNKNOWN: 3">3</div><div class="stage-seg orange" style="width:4.3%" title="HOT: 2">2</div><div class="stage-seg gray" style="width:2.1%" title="RESEARCH: 1">1</div></div>
+  <div class="stage-bar"><div class="stage-seg gray" style="width:30.8%" title="DISCOVERED: 16">16</div><div class="stage-seg green" style="width:23.1%" title="SENT: 12">12</div><div class="stage-seg gray" style="width:17.3%" title="SKIP: 9">9</div><div class="stage-seg gray" style="width:9.6%" title="COLD: 5">5</div><div class="stage-seg yellow" style="width:7.7%" title="WARM: 4">4</div><div class="stage-seg gray" style="width:5.8%" title="UNKNOWN: 3">3</div><div class="stage-seg orange" style="width:3.8%" title="HOT: 2">2</div><div class="stage-seg gray" style="width:1.9%" title="RESEARCH: 1">1</div></div>
   <div class="stage-legend">
-    <span>SENT: 12</span><span>DISCOVERED: 11</span><span>SKIP: 9</span><span>COLD: 5</span><span>WARM: 4</span><span>UNKNOWN: 3</span><span>HOT: 2</span><span>RESEARCH: 1</span>
+    <span>DISCOVERED: 16</span><span>SENT: 12</span><span>SKIP: 9</span><span>COLD: 5</span><span>WARM: 4</span><span>UNKNOWN: 3</span><span>HOT: 2</span><span>RESEARCH: 1</span>
   </div>
 </div>
 
@@ -127,7 +133,7 @@
     <h2>Cron Jobs</h2>
     <table>
       <tr><th>Job</th><th>Last Run</th><th>Status</th></tr>
-      <tr><td>AI Opportunities Research</td><td class='mono'>30 Apr 00:04</td><td><span class="dot green"></span></td></tr><tr><td>Lead Finder</td><td class='mono'>Never</td><td><span class="dot gray"></span></td></tr><tr><td>Content Pipeline</td><td class='mono'>30 Apr 08:01</td><td><span class="dot green"></span></td></tr>
+      <tr><td>AI Opportunities Research</td><td class='mono'>30 Apr 00:04</td><td><span class="dot green"></span></td></tr><tr><td>Lead Finder</td><td class='mono'>30 Apr 09:10</td><td><span class="dot green"></span></td></tr><tr><td>Content Pipeline</td><td class='mono'>30 Apr 08:01</td><td><span class="dot green"></span></td></tr>
     </table>
   </div>
   <div class="card">
@@ -141,6 +147,45 @@
 
 <!-- LATEST RESEARCH -->
 
+
+<!-- EMVY TOOLS CATALOG -->
+
+<div class="card">
+  <h2>EMVY Tools Catalog <span class="sub">— vault/tools/TOOLS-CATALOG.md</span></h2>
+  <div class="tools-stats">
+          <div class="tool-stat">
+            <div class="tool-stat-val">7</div>
+            <div class="tool-stat-lbl">Cron Jobs</div>
+          </div>
+          <div class="tool-stat">
+            <div class="tool-stat-val">12</div>
+            <div class="tool-stat-lbl">Skills</div>
+          </div>
+          <div class="tool-stat">
+            <div class="tool-stat-val">6</div>
+            <div class="tool-stat-lbl">Scripts</div>
+          </div>
+          <div class="tool-stat">
+            <div class="tool-stat-val">6</div>
+            <div class="tool-stat-lbl">Profiles</div>
+          </div>
+        </div>
+  
+        <div class="card">
+          <h2>Active Crons</h2>
+          <table>
+            <tr><th>Job</th><th>Schedule</th><th>Status</th></tr>
+            <tr><td class='mono small'>700d78d17a38</td><td class='mono small'>Midnight daily</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>emvy-reply-detector</td><td class='mono small'>9,11,1,3,5 PM M-F</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>emvy-lead-finder</td><td class='mono small'>9 AM Mon-Thu</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>competitor-intelligence</td><td class='mono small'>9 AM daily</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>emvy-content-pipeline</td><td class='mono small'>8 AM Mon-Fri</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>emvy-pipeline-health</td><td class='mono small'>8 AM Mondays</td><td><span class="dot green"></span></td></tr><tr><td class='mono small'>session-snapshot</td><td class='mono small'>Every 30 min</td><td><span class="dot green"></span></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h2>EMVY Skills</h2>
+          <table>
+            <tr><th>Skill</th><th>Status</th></tr>
+            
+          </table>
+        </div>
+</div>
 
 <!-- RECENT OUTREACH -->
 <div class="card">
